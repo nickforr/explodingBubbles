@@ -1,0 +1,27 @@
+links
+
+Inspiration
+http://www.nytimes.com/interactive/2016/06/10/upshot/voting-habits-turnout-partisanship.html?_r=0
+
+General d3
+https://leanpub.com/d3-t-and-t-v4/read#leanpub-auto-html
+http://www.jeromecukier.net/blog/2011/08/11/d3-scales-and-color/
+
+http://vallandingham.me/becoming_datavis_practitioner.html
+
+
+Simple
+http://vallandingham.me//bubble_charts_with_d3v4.html
+http://vallandingham.me/bubble_chart_v4/#
+https://github.com/vlandham/bubble_chart_v4
+Uses forceManyBody and 'charge'
+
+More complex
+https://github.com/MichaelCurrie/bubble_chart
+https://gist.github.com/MichaelCurrie/5e2da378a53ea624082cb55e78fdfa05
+Uses collision force
+
+
+Link with R & shiny
+http://myinspirationinformation.com/visualisation/d3-js/integrating-d3-js-into-r-shiny/
+
