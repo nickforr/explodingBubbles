@@ -31,8 +31,6 @@ function createBubbleChart() {
     var yAxis = null;
     var xScale = null;
     var yScale = null;
-    // For the map
-    var bubbleMercProjection = d3.geoAlbers();
 
     function getFillColorScale() {
         // Obtain a color mapping from keys to color values specified in our parameters file
@@ -195,6 +193,7 @@ function createBubbleChart() {
          */
         // Change the circle's outline to indicate hover state.
         d3.select(this).attr('stroke', 'black');
+        d3.select(this).attr('stroke-width', 3);
 
         // Show the tooltip
         tooltip.showTooltip(tooltipContent(d), d3.event);
@@ -206,7 +205,9 @@ function createBubbleChart() {
          */
         // Reset the circle's outline back to its original color.
         var originalColor = d3.rgb(fillColorScale(d.fill_color_group)).darker()
+        var originalWidth = 1
         d3.select(this).attr('stroke', originalColor);
+        d3.select(this).attr('stroke-width', originalWidth);
 
         // Hide the tooltip
         tooltip.hideTooltip();
@@ -264,7 +265,7 @@ function createBubbleChart() {
             .classed('bubble', true)
             .attr('fill', function (d) { return fillColorScale(d.fill_color_group); })
             .attr('stroke', function (d) { return d3.rgb(fillColorScale(d.fill_color_group)).darker(); })
-            .attr('stroke-width', 2)
+            .attr('stroke-width', 1)
             .on('mouseover', showTooltip)
             .on('mouseout', hideTooltip);
 
@@ -350,7 +351,7 @@ function createBubbleChart() {
         var maxRadius = dataExtents[BUBBLE_PARAMETERS.radius_field][1];
         radiusScale = d3.scalePow()
             .exponent(0.5)
-            .range([2, 30])  // Range between 2 and 25 pixels
+            .range([2, 20])  // Range between 2 and 20 pixels
             .domain([0, maxRadius]);   // Domain between 0 and the largest bubble radius
 
         fillColorScale = getFillColorScale();
@@ -360,11 +361,6 @@ function createBubbleChart() {
 
         // Initialize svg and inner_svg, which we will attach all our drawing objects to.
         createCanvas(parentDOMElement);
-
-        // Create a container for the map before creating the bubbles
-        // Then we will draw the map inside this container, so it will appear behind the bubbles
-        inner_svg.append("g")
-            .attr("class", "world_map_container");
 
         // Create the bubbles and the force holding them apart
         createBubbles();
@@ -387,9 +383,7 @@ function createBubbleChart() {
         inner_svg.selectAll('.mc_debug').remove(); // DEBUG
         // Remove axes components
         inner_svg.selectAll('.axis').remove();
-        // Remove map
-        inner_svg.selectAll('.world_map').remove();
-
+        
         // SHOW LABELS (if we have more than one category to label)
         if (currentMode.type == "grid" && currentMode.size > 1) {
             showLabels(currentMode);
@@ -411,28 +405,6 @@ function createBubbleChart() {
             addForceLayout(false); // the bubbles should repel about the grid centers
         }
 
-        // SHOW MAP (if our mode is "map")
-        if (currentMode.type == "map") {
-            var path = d3.geoPath().projection(bubbleMercProjection);
-
-            d3.queue()
-                .defer(d3.json, BUBBLE_PARAMETERS.map_file)
-                .await(ready);
-
-                function ready(error, topology) {
-                  if (error) throw error;
-
-                  inner_svg.selectAll(".world_map_container")
-                    .append("g")
-                    .attr("class", "world_map")
-                    .selectAll("path")
-                    .data(topojson.feature(topology, topology.objects.states).features)
-                    .enter()
-                    .append("path")
-                    .attr("d", path);
-                }
-        }
-
         // MOVE BUBBLES TO THEIR NEW LOCATIONS
         var targetFunction;
         if (currentMode.type == "grid") {
@@ -443,14 +415,6 @@ function createBubbleChart() {
                 return {
                     x: xScale(d[currentMode.xDataField]),
                     y: yScale(d[currentMode.yDataField])
-                };
-            };
-        }
-        if (currentMode.type == "map") {
-            targetFunction = function (d) {
-                return {
-                    x: bubbleMercProjection([+d.Longitude, +d.Latitude])[0],
-                    y: bubbleMercProjection([+d.Longitude, +d.Latitude])[1]
                 };
             };
         }
@@ -527,10 +491,6 @@ function ViewMode(button_id, width, height) {
         this.yDataField = curMode.y_data_field;
         this.xFormatString = curMode.x_format_string;
         this.yFormatString = curMode.y_format_string;
-    }
-    if (this.type == "map") {
-        this.latitudeField = curMode.latitude_field;
-        this.longitudeField = curMode.longitude_field;
     }
 };
 

@@ -3,11 +3,11 @@ var BUBBLE_PARAMETERS = {
     "report_title": "Quant projects breakdown",
     "footer_text": "Analysis based on quant wip from connect (as at Jan 17); na's removed.",
     "width": 940,
-    "height": 600,
+    "height": 1200,
     "force_strength": 0.03,
     "force_type": "charge",
     "radius_field": "Quant Budget",
-    "numeric_fields": ["Quant Budget"],
+    "numeric_fields": ["Quant Budget", "proj year"],
     "fill_color": {
         "data_field": "Project Type",
         "color_groups": {
@@ -44,28 +44,12 @@ var BUBBLE_PARAMETERS = {
             "data_field": "Project Type"
         },
         {
-            "button_text": "Assets by Change in Value",
-            "button_id": "Change",
+            "button_text": "Projects by year",
+            "button_id": "projYear",
             "type": "grid",
-            "labels": ["Down", "No Change", "Up"],
-            "grid_dimensions": {"rows": 1, "columns": 3},
-            "data_field": "Change"
-        },
-        {
-            "button_text": "Change in value vs Net Value",
-            "button_id": "change_vs_net_value",
-            "type": "scatterplot",
-            "x_data_field": "Net Value",
-            "y_data_field": "Change vs 2015",
-            "x_format_string": ",.2r",
-            "y_format_string": ",.2r"
-        },
-        {
-            "button_text": "Assets by Location",
-            "button_id": "assets_on_map",
-            "type": "map",
-            "latitude_field": "Latitude",
-            "longitude_field": "Longitude"
+            "labels": ["2012", "2013", "2014", "2015", "2016"],
+            "grid_dimensions": {"rows": 3, "columns": 2},
+            "data_field": "proj year"
         }
     ]
 };
