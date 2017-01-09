@@ -1,13 +1,13 @@
 var BUBBLE_PARAMETERS = {
     "data_file": "cleanWipData.csv",
-    "report_title": "Quant projects breakdown",
+    "report_title": "Quant projects breakdown (last 3yrs)",
     "footer_text": "Analysis based on quant wip from connect (as at Jan 17); na's removed.",
-    "width": 940,
-    "height": 1200,
+    "width": 1200,
+    "height": 1000,
     "force_strength": 0.03,
     "force_type": "charge",
     "radius_field": "Quant Budget",
-    "numeric_fields": ["Quant Budget", "proj year"],
+    "numeric_fields": ["Quant Budget"],
     "fill_color": {
         "data_field": "Project Type",
         "color_groups": {
@@ -47,8 +47,8 @@ var BUBBLE_PARAMETERS = {
             "button_text": "Projects by year",
             "button_id": "projYear",
             "type": "grid",
-            "labels": ["2012", "2013", "2014", "2015", "2016"],
-            "grid_dimensions": {"rows": 3, "columns": 2},
+            "labels": ["In 2014", "In 2015", "In 2016"],
+            "grid_dimensions": {"rows": 1, "columns": 3},
             "data_field": "proj year"
         }
     ]

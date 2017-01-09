@@ -18,6 +18,8 @@ tempWipData <-
   filter(`Quant Budget` > 0) %>%
   mutate(`internal deadline` = lubridate::dmy(`internal deadline`)) %>%
   mutate(`proj year` = lubridate::year(`internal deadline`)) %>%
+  filter(`proj year` >= 2014) %>%
+  mutate(`proj year` = paste0("In ", `proj year`)) %>%
   mutate(`proj date` = 
       paste0(
         lubridate::month(`internal deadline`, label = TRUE), " ", 

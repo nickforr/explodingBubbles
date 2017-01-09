@@ -315,7 +315,7 @@ function createBubbleChart() {
             .attr('height', BUBBLE_PARAMETERS.height);
 
         // Specify margins and the inner width and height
-        margin = {top: 20, right: 20, bottom: 50, left: 80},
+        margin = {top: 20, right: 20, bottom: 20, left: 20},
         width = +svg.attr("width") - margin.left - margin.right,
         height = +svg.attr("height") - margin.top - margin.bottom;
 
